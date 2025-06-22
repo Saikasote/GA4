@@ -2,12 +2,13 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '17 4 * * *'  # runs daily at 4:17 UTC
+    - cron: '17 4 * * *'  # daily at 04:17 UTC
   workflow_dispatch:
 
 jobs:
   commit-job:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -17,8 +18,8 @@ jobs:
       - name: Make daily commit by 23f1002151@ds.study.iitm.ac.in
         run: |
           echo "Daily heartbeat: $(date)" >> daily-log.txt
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add daily-log.txt
-          git commit -m "Daily commit from GitHub Action" || echo "No changes to commit"
-          git push
+          git commit -m "Daily commit from GitHub Action" || echo "Nothing to commit"
+          git push origin HEAD
